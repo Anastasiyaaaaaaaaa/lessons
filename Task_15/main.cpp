@@ -25,14 +25,11 @@
 #include<iostream>
 #include<fstream>
 #include<cstring>
+#include "raspisanie.h"
+#include "previe_file.h"
+
 using namespace std;
 
-struct raspisanie {
-    int nomer;
-    char inicial[10];
-    char punktot[20];
-    char punktnaz[20];
-};
 
 int showmenu() {
     int menu = 1, k = 0;
@@ -62,24 +59,16 @@ void read_input(fstream &out){
     cout<<endl;
 }
 
-void vivod() {
-    raspisanie rasp;
-    char name[20];
+
+
+void filename_input( ){
+    char filename[20];
     cout << "Название файла: " << endl;
-    cin >> name;
+    cin >> filename;
     cout << endl;
-    fstream f(name, ios::binary | ios::in);
-    f.read(reinterpret_cast<char *>(&rasp), sizeof(rasp));
-    while (!f.eof()) {
-        cout << "Номер маршрута: " << rasp.nomer << endl;
-        cout << "ФИО водителя: " << rasp.inicial << endl;
-        cout << "Пункт отправления: " << rasp.punktot << endl;
-        cout << "Пункт назначения: " << rasp.punktnaz << endl;
-        cout << endl;
-        f.read(reinterpret_cast<char *>(&rasp), sizeof(rasp));
-    }
-    cout << endl;
-    f.close();
+
+    file_preview(filename);
+
 }
 
 void save_scedule_to_file(const char* filename) {
@@ -93,11 +82,12 @@ void save_scedule_to_file(const char* filename) {
 void processMenu(int selected) {
     switch (selected) {
         case 1:
-            save_scedule_to_file("2.bin");
+            save_scedule_to_file("1.bin");
             return;
 
 
         case 2:
+            filename_input();
             break;
 
         default:
